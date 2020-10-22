@@ -15,14 +15,19 @@ const bot = new TelegramBot(TOKEN, {
     }
 })
 
-bot.on('message', msg => {
+bot.onText(/\/start/, msg => {
     const { id } = msg.chat
 
     bot.sendMessage(id, debug(msg))
-    .then(()=>{
-        console.log('Message has been send')
-    })
-    .catch((error)=>{
-        console.error(error)
-    })
+
+})
+
+bot.onText(/\help (.+)/, (msg, [source, match]) => { //Забираюмо все рлюс остаток
+    const { id } = msg.chat 
+    
+    bot.sendMessage(id, debug(match))
+}) 
+
+bot.on('message', msg => {
+    bot.sendMessage(msg.chat.id, 'Message!')
 })
