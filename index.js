@@ -18,9 +18,11 @@ const bot = new TelegramBot(TOKEN, {
 bot.on('message', msg => {
     const { id } = msg.chat
 
-if (msg.text.toLowerCase() === 'hello'){
-    bot.sendMessage(id, `Hello, ${msg.from.first_name}`);
-} else {
     bot.sendMessage(id, debug(msg))
-}
+    .then(()=>{
+        console.log('Message has been send')
+    })
+    .catch((error)=>{
+        console.error(error)
+    })
 })
