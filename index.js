@@ -16,12 +16,41 @@ const bot = new TelegramBot(TOKEN, {
 })
 
 bot.on('message', msg => {
-    setTimeout(()=>{
-        bot.sendMessage(msg.chat.id, `https://core.telegram.org/methods`,{
-            disable_web_page_preview:true,
-            disable_notification:false
+    const chatId = msg.chat.id
+
+    if(msg.text === 'Закрыть'){
+
+        bot.sendMessage(chatId, 'Закрыаю клавиатуру', {
+            reply_markup:{
+                remove_keyboard: true
+            }
         })
-    }, 4000)
-    console.log(msg)
+
+    } else if(msg.text === 'Ответить'){
+
+        bot.sendMessage(chatId, 'Отвечаю', {
+            reply_markup:{
+                force_reply: true
+            }
+        })
+
+    } else{
+        bot.sendMessage(chatId, 'Клавиатура', {
+            reply_markup:{
+                keyboard:[
+                  [{
+                      text: 'Отправить местоположение',
+                      request_location: true
+                  }],
+                  ['Ответить', 'Закрыть'],
+                  [{
+                      text: 'Отправить контакт',
+                      request_contact: true
+                  }]
+                ],
+                one_time_keyboard: true //Клавіатура зникає після кожного запиту
+            }
+        })
+    }
     
 })
