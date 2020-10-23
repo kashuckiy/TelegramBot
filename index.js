@@ -16,12 +16,12 @@ const bot = new TelegramBot(TOKEN, {
 })
 
 bot.on('message', msg => {
-    const markdown = `
-    *Hello, ${msg.from.first_name}*
-    _Italik text_
-    `
-
-    bot.sendMessage(msg.chat.id, markdown, {
-        parse_mode:"Markdown"
-    })
+    setTimeout(()=>{
+        bot.sendMessage(msg.chat.id, `https://core.telegram.org/methods`,{
+            disable_web_page_preview:true,
+            disable_notification:false
+        })
+    }, 4000)
+    console.log(msg)
+    
 })
