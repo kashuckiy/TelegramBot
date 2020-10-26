@@ -17,40 +17,31 @@ const bot = new TelegramBot(TOKEN, {
 
 bot.on('message', msg => {
     const chatId = msg.chat.id
+     bot.sendMessage(chatId, 'Inline keyboard', {
+         reply_markup:{
+             inline_keyboard: [
+               [
+                   {
+                       text: 'Google',
+                       url: 'https://google.com'
+                   }
+               ],
+               [
+                    {
+                    text: 'Reply',
+                    callback_data: 'reply'
+                    },
+                   {
+                    text: 'Forward',
+                    callback_data: 'forward'     
+                   }
+               ]  
+             ]
+         }
+     })
+})
 
-    if(msg.text === 'Закрыть'){
-
-        bot.sendMessage(chatId, 'Закрыаю клавиатуру', {
-            reply_markup:{
-                remove_keyboard: true
-            }
-        })
-
-    } else if(msg.text === 'Ответить'){
-
-        bot.sendMessage(chatId, 'Отвечаю', {
-            reply_markup:{
-                force_reply: true
-            }
-        })
-
-    } else{
-        bot.sendMessage(chatId, 'Клавиатура', {
-            reply_markup:{
-                keyboard:[
-                  [{
-                      text: 'Отправить местоположение',
-                      request_location: true
-                  }],
-                  ['Ответить', 'Закрыть'],
-                  [{
-                      text: 'Отправить контакт',
-                      request_contact: true
-                  }]
-                ],
-                one_time_keyboard: true //Клавіатура зникає після кожного запиту
-            }
-        })
-    }
-    
+bot.on('callback_query', query =>{
+    bot.sendMessage(query.message.chat.id, debug(query)) //обект query і що в ньому знаходиться
+    bot.answerCallbackQuery(query.id, `${query.data}`) // додаткове вилітаюче повідомлення підказка
 })
