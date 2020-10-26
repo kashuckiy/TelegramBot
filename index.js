@@ -15,33 +15,22 @@ const bot = new TelegramBot(TOKEN, {
     }
 })
 
-bot.on('message', msg => {
-    const chatId = msg.chat.id
-     bot.sendMessage(chatId, 'Inline keyboard', {
-         reply_markup:{
-             inline_keyboard: [
-               [
-                   {
-                       text: 'Google',
-                       url: 'https://google.com'
-                   }
-               ],
-               [
-                    {
-                    text: 'Reply',
-                    callback_data: 'reply'
-                    },
-                   {
-                    text: 'Forward',
-                    callback_data: 'forward'     
-                   }
-               ]  
-             ]
-         }
-     })
-})
+bot.on('inline_query', query =>{
 
-bot.on('callback_query', query =>{
-    bot.sendMessage(query.message.chat.id, debug(query)) //обект query і що в ньому знаходиться
-    bot.answerCallbackQuery(query.id, `${query.data}`) // додаткове вилітаюче повідомлення підказка
+    const results = []
+
+    for(let i = 0; i < 5; i++){
+        results.push({
+           type: 'article',
+           id: i.toString(),
+           title: 'Title ' + i,
+           input_message_content:{
+            message_text:  `Article #${i+1}`
+           }
+        })
+    }
+
+    bot.answerInlineQuery(query.id, results, {
+        cache_time: 0
+    })
 })
