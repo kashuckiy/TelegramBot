@@ -43,11 +43,11 @@ bot.on('callback_query', query => {
 
     switch(query.data){
         case 'forward':
-            //куда, откуда, что(ід того повідомлення які потрібно перенаправити)
-            bot.forwardMessage(chat.id, chat.id, message_id)//Перенаправлення повідомлень
+            //РєСѓРґР°, РѕС‚РєСѓРґР°, С‡С‚Рѕ -id РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ, СЏРєРµ РїРѕС‚СЂС–Р±РЅРѕ РїРµСЂРµРЅР°РїСЂР°РІРёС‚Рё
+            bot.forwardMessage(chat.id, chat.id, message_id)//РјРµС‚РѕРґ РїРµСЂРµРЅР°РїСЂР°РІР»РµРЅРЅСЏ РїРѕРІС–РґРѕРјР»РµРЅСЊ
             break
     }
-    //Застаріла версія
+    //СЃС‚Р°СЂР° РІРµСЂСЃС–СЏ answerCallbackQuery
     // bot.answerCallbackQuery({
     //     callback_query_id: query.id
     // })
